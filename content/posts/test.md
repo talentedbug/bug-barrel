@@ -6,6 +6,8 @@ title: '测试'
 
 🚧 桶装幺蛾子的新版本即将上线 🚧
 
+旧网站位于 [OLD](https://old.dumpster.top)。
+
 这个页面对 Hugo、PaperMod 和本蛾子自己的配置的 Markdown 语法显示效果进行测试。
 
 参考 [iHaPBoy 的 Gist](https://gist.github.com/iHaPBoy/a7d1c4f9ccf180c43b696a0a7c9d5381) 并整理、剔除了部分过于怪异的语法，仅测试标准。
