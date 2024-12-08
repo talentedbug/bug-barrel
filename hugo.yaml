@@ -1,0 +1,73 @@
+baseURL: "https://hi.dumpster.top"
+title: 桶装幺蛾子
+languageCode: zh-cn
+defaultContentLanguage: zh-cn
+copyright: "使用 [CC0](https://creativecommons.org/public-domain/cc0/) 授权，允许您自由使用。"
+theme: ["PaperMod"]
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+mainsections: ["posts", "papermod"]
+
+minify:
+  disableXML: true
+
+languages:
+  zh-cn:
+    languageName: "简体中文"
+    menu:
+      main:
+        - name: 📚 档案
+          url: archives
+        - name: ❓ 关于
+          url: about
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+params:
+  env: production
+  description: "智慧的幺蛾子的奇葩博客"
+  author: 智慧的幺蛾子
+
+  defaultTheme: auto
+  disableThemeToggle: true
+  ShowShareButtons: true
+  ShowReadingTime: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowAllPagesInArchive: true
+  ShowPageNums: true
+  ShowToc: true
+  comments: false
+
+  homeInfoParams:
+    Title: "🥫 桶装幺蛾子"
+    Content: 变宝为废，变废为核废
+
+  socialIcons:
+    - name: github
+      title: 看看本蛾子的 Github
+      url: "https://github.com/talentedbug"
+    - name: email
+      title: 通过邮件联系本蛾子
+      url: "https://discord.gg/ahpmTvhVmp"
+
+  assets:
+    favicon: "favicon.jpg"
+    favicon16x16: "favicon.jpg"
+    favicon32x32: "favicon.jpg"
+    apple_touch_icon: "favicon.jpg"
+    safari_pinned_tab: "favicon.jpg"
+
