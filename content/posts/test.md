@@ -6,7 +6,7 @@ title: '测试'
 
 🚧 桶装幺蛾子的新版本即将上线 🚧
 
-旧网站位于 [OLD](https://old.dumpster.top)。
+旧网站位于 [OLD](https://old.bug-barrel.top)。
 
 这个页面对 Hugo、PaperMod 和本蛾子自己的配置的 Markdown 语法显示效果进行测试。
 
