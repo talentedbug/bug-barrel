@@ -62,7 +62,7 @@ params:
       url: "https://github.com/talentedbug"
     - name: email
       title: 通过邮件联系本蛾子
-      url: "https://discord.gg/ahpmTvhVmp"
+      url: "mailto:talentedbug@tutamail.com"
 
   assets:
     favicon: "favicon.jpg"
