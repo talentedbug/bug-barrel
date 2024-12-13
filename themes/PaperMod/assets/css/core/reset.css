@@ -32,6 +32,10 @@ body {
     background: var(--theme);
 }
 
+code {
+    font-family: "Noto Sans Mono";
+}
+
 article,
 aside,
 figcaption,
