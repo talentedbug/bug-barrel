@@ -67,7 +67,8 @@ OI：
 
 各大平台 ID 不是中文的“智慧的幺蛾子”就是英文的“Talented Bug”（或者变种“talentedbug”“TalentedBug”等等）。
 
-- 🔒 PGP 指纹：`87F4 59A1 1D48 824B 2488 5242 01E6 FBD8 0551 79C6`（RSA 2048）。
+- 🔒 SSH 公钥：`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM5jYnrDusUd8d8aPmldZqsOOUQZf9fHOtekQe+Df7d4 Talented Bug <talentedbug@tutamail.com>`。
+- 🔑 PGP 公钥：`8230 B661 F3CE AA85 C698 64A2 8771 74C3 CDDA A180`。
 - 📧 邮件：[talentedbug@tutamail.com](talentedbug@tutamail.com)。
 - 🐙 GitHub：[Talented Bug (talentedbug)](https://github.com/talentedbug)
 - 🌈 Bluesky：[Talented Bug (talentedbug.bsky.social)](https://bsky.app/profile/talentedbug.bsky.social)
