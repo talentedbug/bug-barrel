@@ -67,11 +67,12 @@ OI：
 
 各大平台 ID 不是中文的“智慧的幺蛾子”就是英文的“Talented Bug”（或者变种“talentedbug”“TalentedBug”等等）。
 
-- 🔒 SSH 公钥：`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM5jYnrDusUd8d8aPmldZqsOOUQZf9fHOtekQe+Df7d4 Talented Bug <talentedbug@tutamail.com>`。
-- 🔑 PGP 公钥：`8230 B661 F3CE AA85 C698 64A2 8771 74C3 CDDA A180`。
-- 📧 邮件：[talentedbug@tutamail.com](talentedbug@tutamail.com)。
+- 🔒 SSH 公钥：`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtPga4T15OdsQJ+wFxp0yacuhxYA9qQTGNqz/HE9hp+ Talented Bug <talentedbug@bug-barrel.top>`。
+- 🔑 PGP 公钥：`5848 5086 D9A0 2634 1F4B 663E 4F51 3147 DE97 FFBC`（`Talented Bug <talentedbug@bug-barrel.top>`）。
+- 📧 邮件：[talentedbug@bug-barrel.top](mailto:talentedbug@bug-barrel.top)。
 - 🐙 GitHub：[Talented Bug (talentedbug)](https://github.com/talentedbug)
 - 🌈 Bluesky：[Talented Bug (talentedbug.bsky.social)](https://bsky.app/profile/talentedbug.bsky.social)
 - 🐧 LINUX DO：[Talented Bug (talentedbug)](https://linux.do/u/talentedbug)
 
 其他平台您也可以搜一搜，但是一般本蛾子不怎么看，建议有什么想说的直接邮件。如果想加 QQ 私聊，也请通过邮件联系获得。
+
