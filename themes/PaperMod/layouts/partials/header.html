@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            {{- $label_text := (site.Params.label.text | default site.Title) }}
+            {{- $label_text := .Site.Params.fancyTitle }}
             {{- if site.Title }}
             <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
                 {{- if site.Params.label.icon }}

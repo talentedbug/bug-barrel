@@ -37,6 +37,7 @@ params:
   env: production
   description: "智慧的幺蛾子的奇葩博客"
   author: 智慧的幺蛾子
+  fancyTitle: "🥫 桶装幺蛾子"
 
   defaultTheme: auto
   disableThemeToggle: true
@@ -53,7 +54,7 @@ params:
   comments: false
 
   homeInfoParams:
-    Title: "🥫 桶装幺蛾子"
+    Title: "桶装幺蛾子"
     Content: 变宝为废，变废为核废
 
   socialIcons:

@@ -19,7 +19,9 @@
 }
 
 .logo {
+    font-family: 'Noto Serif SC';
     flex-wrap: inherit;
+    font-style: bold;
 }
 
 .logo a {
