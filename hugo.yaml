@@ -26,6 +26,8 @@ languages:
           url: archives
         - name: ❓ 关于
           url: about
+        - name: 🚆 开往
+          url: https://www.travellings.cn/go.html
 
 outputs:
   home:
