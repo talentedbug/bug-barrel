@@ -1,5 +1,5 @@
 ---
-title: "📚 档案"
+title: "📚 檔案"
 layout: "archives"
 summary: "archives"
 ---

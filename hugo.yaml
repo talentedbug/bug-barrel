@@ -1,8 +1,8 @@
 baseURL: "https://hi.bug-barrel.top"
-title: 桶装幺蛾子
-languageCode: zh-cn
-defaultContentLanguage: zh-cn
-copyright: "使用 [CC0](https://creativecommons.org/public-domain/cc0/) 授权，允许您自由使用。"
+title: 桶裝幺蛾子
+languageCode: zh-tw
+defaultContentLanguage: zh-tw
+copyright: "[CC0](https://creativecommons.org/public-domain/cc0/) 授權，允許您自由使用。"
 theme: ["PaperMod"]
 
 enableInlineShortcodes: true
@@ -18,15 +18,15 @@ minify:
   disableXML: true
 
 languages:
-  zh-cn:
-    languageName: "简体中文"
+  zh-tw:
+    languageName: "傳統中文"
     menu:
       main:
-        - name: 📚 档案
+        - name: 📚 檔案
           url: archives
-        - name: ❓ 关于
+        - name: ❓ 關於
           url: about
-        - name: 🚆 开往
+        - name: 🚆 開往
           url: https://www.travellings.cn/go.html
 
 outputs:
@@ -39,7 +39,7 @@ params:
   env: production
   description: "智慧的幺蛾子的奇葩博客"
   author: 智慧的幺蛾子
-  fancyTitle: "🥫 桶装幺蛾子"
+  fancyTitle: "🥫 桶裝幺蛾子"
 
   defaultTheme: auto
   disableThemeToggle: true
@@ -56,15 +56,15 @@ params:
   comments: false
 
   homeInfoParams:
-    Title: "桶装幺蛾子"
-    Content: 变宝为废，变废为核废
+    Title: "桶裝幺蛾子"
+    Content: 變寶爲廢，變廢爲核廢
 
   socialIcons:
     - name: github
       title: 看看本蛾子的 Github
       url: "https://github.com/talentedbug"
     - name: email
-      title: 通过邮件联系本蛾子
+      title: 通過郵件聯繫本蛾子
       url: "mailto:talentedbug@tutamail.com"
 
   assets:

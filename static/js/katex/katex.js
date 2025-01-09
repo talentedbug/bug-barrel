@@ -16576,7 +16576,7 @@ defineMacro("\\kaBlue", "\\textcolor{##314453}{#1}");
 defineMacro("\\kaGreen", "\\textcolor{##71B307}{#1}");
 ;// CONCATENATED MODULE: ./src/MacroExpander.js
 /**
- * This file contains the “gullet” where macros are expanded
+ * This file contains the 「gullet」 where macros are expanded
  * until only non-macro tokens remain.
  */
 
