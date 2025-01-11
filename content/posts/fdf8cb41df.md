@@ -140,30 +140,37 @@ sudo hp-plugin -i
 
 Windows 打印，到这里就结束了，只需要在设置里添加设备，就能自动扫描网络并找到设备。但是 Linux 和 macOS 还需要额外设置。
 
-本蛾子使用的是 Arch Linux 和 KDE Plasma，图形界面管理只需要安装一个 `system-config-printer` 包即可。在系统设置的打印机设置里，选择添加打印机，输入刚刚那个管理界面的网址（`http://IP:PORT/printers/NAME`），点击右侧的搜索，没啥问题的话就会显示。
+根据 [ArchWiki](https://wiki.archlinux.org/title/CUPS/Troubleshooting#Client_and_host_both_run_CUPS_with_hpcups) 的说明，您不应当在客户端和服务端都启用 `hplip` 提供的驱动，否则文件会被 filter 两次，导致打印失败。
 
-![image-20250111143011285](../../static/img/fdf8cb41df.d/image-20250111143011285.png)
-
-接下来会要求提供 PPD 文件。问题来了，这时候大概是没有任何 PPD 文件供您选择的。这是因为尽管打印机连接到单板机上，但是您在本地还是需要和单板机上一样配置一遍 CUPS 的。
+先在本地也部署一下 CUPS：
 
 ```bash
-sudo pacman -Sy cups hplip
+sudo pacman -Sy cups
 sudo systemctl start cups
-sudo hp-plugin -i # 与刚刚相同的操作
 ```
 
-重新打开系统设置，会发现这次可以选择 PPD 文件了，根据您的打印机型号，选择预置的 PPD 文件即可。
+本地其实并不需要安装驱动，但是以防万一，您可以按照上面服务端的做法安装一下 `hplip` 包并安装专有插件。KDE Plasma 有自带的打印机管理界面，但是不能使用，因为这玩意儿缺了很多 CUPS 网页管理界面的功能，因此打开 `localhost:631`，依然在网页端操作。
 
-![image-20250111145353865](../../static/img/fdf8cb41df.d/image-20250111145353865.png)
+首先依然选择添加打印机的选项，但这次我们选择 IPP 协议的打印机。
 
-![image-20250111145421091](../../static/img/fdf8cb41df.d/image-20250111145421091.png)
+![image-20250111165135320](../../static/img/fdf8cb41df.d/image-20250111165135320.png)
 
-最后记得点击「Add」保存设置。然后可以在设置里将其设定为默认打印机，同样可以打印测试页。
+按照 `ipp://IP:PORT/printer/QUEUE_NAME` 输入地址。
 
-![image-20250111145541965](../../static/img/fdf8cb41df.d/image-20250111145541965.png)
+![image-20250111165320766](../../static/img/fdf8cb41df.d/image-20250111165320766.png)
 
-macOS 的设置与之很类似，毕竟使用了同一套 CUPS 嘛。完成之后，就可以拿 LibreOffice 之类的尝试打印啦。
+这里设置名称，不需要和服务端保持一致，不勾选共享打印机。
+
+![image-20250111165618653](../../static/img/fdf8cb41df.d/image-20250111165618653.png)
+
+下一步，注意一定要选择「Raw」里的「IPP Everywhere™」，避免上面说到的两次 filter 问题。
+
+![image-20250111165742280](../../static/img/fdf8cb41df.d/image-20250111165742280.png)
+
+然后保持默认选项，打印机就添加完成了！打印一张测试页试试。
+
+这回测试页上并没有 Arch Linux 的徽标，只有 CUPS 的，而且测试也少很多。
 
 ## 🎆 下课
 
-本蛾子终于是不需要叫蛾爸打印了啊！单板机也废物利用，太棒了。
+现在本蛾子可以方便地从自己的房间打印试卷了，只需要去拿一下打印完的纸张。蛾爸也终于不怕玩游戏被打断了……
