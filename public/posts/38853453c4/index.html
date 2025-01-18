@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>集训笔记：图论算法一 | 桶装幺蛾子</title>
+<meta name="keywords" content="">
+<meta name="description" content="拓扑排序
+拓扑排序是图论中的一种算法，适用于 DAG 中，可以用于求拓扑序列。拓扑排序的结果是一个线性序列，满足每个顶点在序列中只出现一次，且若存在 A 到 B 的路径，则 A 出现在 B 之前。拓扑序列通常不唯一。
+基于 BFS（入度）的拓扑排序比较容易实现。
+伪代码：
+
+代码示例：
+
+拓扑排序可以判断图中是否有环。如果最终所有顶点的入度都减少为 0，队列清空，则不存在环；否则则有环。
+代码示例：
+
+例题：机器人擂台赛（CF645D）
+
+分析：
+
+没有自相矛盾：没有环；
+没有比赛包含相同机器人：没有重边；
+属于「依赖关系」，优先考虑拓扑排序；
+判断是否有唯一的拓扑序列，可以在拓扑排序过程中判断是否同时有多于一个入度为 0 的顶点（也就是每次只有一个选择）。
+
+直接在拓扑排序的模板上进行修改即可。
+
+对于比赛的处理，可以有以下几种方法：
+
+每次加一条边，并进行拓扑排序，当序列唯一时输出（注意清空）；
+答案具有单调性，可以二分答案，对最大答案进行特判是否无解；
+
+
+
+拓扑排序相邻两个顶点之间的关系必须给出，因此可以在拓扑排序中记录每一场必要的比赛的编号，然后依次扫描所有比赛，在所有比赛都出现的时候就可以输出了。
+
+
+最短路算法
+BFS
+当一张图上不含边权，或者边权都相等，可以直接使用 BFS 计算最短路，算法正确且复杂度不高。
+例题：Nearest Opposite Parity（CF1272E）
+
+
+
+最简单的方法：从每一个数开始，寻找最近的异性数字；
+优化：从所有奇数出发，统计能到达所有偶数的最短路，对于偶数也这样求出最短路；
+反向建图，也就是从 i &#43; a[i] 和 i - a[i] 连一条到 i 的边，也就是从终点出发，寻找到每一个起点的最短路；
+
+代码：
+
+两个 BFS 基本一致，以到达奇数的 BFS 为例：
+">
+<meta name="author" content="智慧的幺蛾子">
+<link rel="canonical" href="http://localhost:1313/posts/38853453c4/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.75cc0bc8b7e49d1131c6aa01c8e0ffc243167dd94130253a953494bccdeba2cb.css" integrity="sha256-dcwLyLfknRExxqoByOD/wkMWfdlBMCU6lTSUvM3ross=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.jpg">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.jpg">
+<link rel="mask-icon" href="http://localhost:1313/favicon.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh-cn" href="http://localhost:1313/posts/38853453c4/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="http://localhost:1313/posts/38853453c4/">
+  <meta property="og:site_name" content="桶装幺蛾子">
+  <meta property="og:title" content="集训笔记：图论算法一">
+  <meta property="og:description" content="拓扑排序 拓扑排序是图论中的一种算法，适用于 DAG 中，可以用于求拓扑序列。拓扑排序的结果是一个线性序列，满足每个顶点在序列中只出现一次，且若存在 A 到 B 的路径，则 A 出现在 B 之前。拓扑序列通常不唯一。
+基于 BFS（入度）的拓扑排序比较容易实现。
+伪代码：
+代码示例：
+拓扑排序可以判断图中是否有环。如果最终所有顶点的入度都减少为 0，队列清空，则不存在环；否则则有环。
+代码示例：
+例题：机器人擂台赛（CF645D）
+分析：
+没有自相矛盾：没有环； 没有比赛包含相同机器人：没有重边； 属于「依赖关系」，优先考虑拓扑排序； 判断是否有唯一的拓扑序列，可以在拓扑排序过程中判断是否同时有多于一个入度为 0 的顶点（也就是每次只有一个选择）。 直接在拓扑排序的模板上进行修改即可。
+对于比赛的处理，可以有以下几种方法：
+每次加一条边，并进行拓扑排序，当序列唯一时输出（注意清空）； 答案具有单调性，可以二分答案，对最大答案进行特判是否无解； 拓扑排序相邻两个顶点之间的关系必须给出，因此可以在拓扑排序中记录每一场必要的比赛的编号，然后依次扫描所有比赛，在所有比赛都出现的时候就可以输出了。 最短路算法 BFS 当一张图上不含边权，或者边权都相等，可以直接使用 BFS 计算最短路，算法正确且复杂度不高。
+例题：Nearest Opposite Parity（CF1272E）
+最简单的方法：从每一个数开始，寻找最近的异性数字； 优化：从所有奇数出发，统计能到达所有偶数的最短路，对于偶数也这样求出最短路； 反向建图，也就是从 i &#43; a[i] 和 i - a[i] 连一条到 i 的边，也就是从终点出发，寻找到每一个起点的最短路； 代码：
+两个 BFS 基本一致，以到达奇数的 BFS 为例：">
+  <meta property="og:locale" content="zh-cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-22T00:00:00+08:00">
+    <meta property="article:modified_time" content="2024-11-22T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="集训笔记：图论算法一">
+<meta name="twitter:description" content="拓扑排序
+拓扑排序是图论中的一种算法，适用于 DAG 中，可以用于求拓扑序列。拓扑排序的结果是一个线性序列，满足每个顶点在序列中只出现一次，且若存在 A 到 B 的路径，则 A 出现在 B 之前。拓扑序列通常不唯一。
+基于 BFS（入度）的拓扑排序比较容易实现。
+伪代码：
+
+代码示例：
+
+拓扑排序可以判断图中是否有环。如果最终所有顶点的入度都减少为 0，队列清空，则不存在环；否则则有环。
+代码示例：
+
+例题：机器人擂台赛（CF645D）
+
+分析：
+
+没有自相矛盾：没有环；
+没有比赛包含相同机器人：没有重边；
+属于「依赖关系」，优先考虑拓扑排序；
+判断是否有唯一的拓扑序列，可以在拓扑排序过程中判断是否同时有多于一个入度为 0 的顶点（也就是每次只有一个选择）。
+
+直接在拓扑排序的模板上进行修改即可。
+
+对于比赛的处理，可以有以下几种方法：
+
+每次加一条边，并进行拓扑排序，当序列唯一时输出（注意清空）；
+答案具有单调性，可以二分答案，对最大答案进行特判是否无解；
+
+
+
+拓扑排序相邻两个顶点之间的关系必须给出，因此可以在拓扑排序中记录每一场必要的比赛的编号，然后依次扫描所有比赛，在所有比赛都出现的时候就可以输出了。
+
+
+最短路算法
+BFS
+当一张图上不含边权，或者边权都相等，可以直接使用 BFS 计算最短路，算法正确且复杂度不高。
+例题：Nearest Opposite Parity（CF1272E）
+
+
+
+最简单的方法：从每一个数开始，寻找最近的异性数字；
+优化：从所有奇数出发，统计能到达所有偶数的最短路，对于偶数也这样求出最短路；
+反向建图，也就是从 i &#43; a[i] 和 i - a[i] 连一条到 i 的边，也就是从终点出发，寻找到每一个起点的最短路；
+
+代码：
+
+两个 BFS 基本一致，以到达奇数的 BFS 为例：
+">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "集训笔记：图论算法一",
+      "item": "http://localhost:1313/posts/38853453c4/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "集训笔记：图论算法一",
+  "name": "集训笔记：图论算法一",
+  "description": "拓扑排序 拓扑排序是图论中的一种算法，适用于 DAG 中，可以用于求拓扑序列。拓扑排序的结果是一个线性序列，满足每个顶点在序列中只出现一次，且若存在 A 到 B 的路径，则 A 出现在 B 之前。拓扑序列通常不唯一。\n基于 BFS（入度）的拓扑排序比较容易实现。\n伪代码：\n代码示例：\n拓扑排序可以判断图中是否有环。如果最终所有顶点的入度都减少为 0，队列清空，则不存在环；否则则有环。\n代码示例：\n例题：机器人擂台赛（CF645D）\n分析：\n没有自相矛盾：没有环； 没有比赛包含相同机器人：没有重边； 属于「依赖关系」，优先考虑拓扑排序； 判断是否有唯一的拓扑序列，可以在拓扑排序过程中判断是否同时有多于一个入度为 0 的顶点（也就是每次只有一个选择）。 直接在拓扑排序的模板上进行修改即可。\n对于比赛的处理，可以有以下几种方法：\n每次加一条边，并进行拓扑排序，当序列唯一时输出（注意清空）； 答案具有单调性，可以二分答案，对最大答案进行特判是否无解； 拓扑排序相邻两个顶点之间的关系必须给出，因此可以在拓扑排序中记录每一场必要的比赛的编号，然后依次扫描所有比赛，在所有比赛都出现的时候就可以输出了。 最短路算法 BFS 当一张图上不含边权，或者边权都相等，可以直接使用 BFS 计算最短路，算法正确且复杂度不高。\n例题：Nearest Opposite Parity（CF1272E）\n最简单的方法：从每一个数开始，寻找最近的异性数字； 优化：从所有奇数出发，统计能到达所有偶数的最短路，对于偶数也这样求出最短路； 反向建图，也就是从 i + a[i] 和 i - a[i] 连一条到 i 的边，也就是从终点出发，寻找到每一个起点的最短路； 代码：\n两个 BFS 基本一致，以到达奇数的 BFS 为例：\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "拓扑排序 拓扑排序是图论中的一种算法，适用于 DAG 中，可以用于求拓扑序列。拓扑排序的结果是一个线性序列，满足每个顶点在序列中只出现一次，且若存在 A 到 B 的路径，则 A 出现在 B 之前。拓扑序列通常不唯一。\n基于 BFS（入度）的拓扑排序比较容易实现。\n伪代码：\n代码示例：\n拓扑排序可以判断图中是否有环。如果最终所有顶点的入度都减少为 0，队列清空，则不存在环；否则则有环。\n代码示例：\n例题：机器人擂台赛（CF645D）\n分析：\n没有自相矛盾：没有环； 没有比赛包含相同机器人：没有重边； 属于「依赖关系」，优先考虑拓扑排序； 判断是否有唯一的拓扑序列，可以在拓扑排序过程中判断是否同时有多于一个入度为 0 的顶点（也就是每次只有一个选择）。 直接在拓扑排序的模板上进行修改即可。\n对于比赛的处理，可以有以下几种方法：\n每次加一条边，并进行拓扑排序，当序列唯一时输出（注意清空）； 答案具有单调性，可以二分答案，对最大答案进行特判是否无解； 拓扑排序相邻两个顶点之间的关系必须给出，因此可以在拓扑排序中记录每一场必要的比赛的编号，然后依次扫描所有比赛，在所有比赛都出现的时候就可以输出了。 最短路算法 BFS 当一张图上不含边权，或者边权都相等，可以直接使用 BFS 计算最短路，算法正确且复杂度不高。\n例题：Nearest Opposite Parity（CF1272E）\n最简单的方法：从每一个数开始，寻找最近的异性数字； 优化：从所有奇数出发，统计能到达所有偶数的最短路，对于偶数也这样求出最短路； 反向建图，也就是从 i + a[i] 和 i - a[i] 连一条到 i 的边，也就是从终点出发，寻找到每一个起点的最短路； 代码：\n两个 BFS 基本一致，以到达奇数的 BFS 为例：\n进一步进行优化，可以设置两个超级源点 $n + 1$ 和 $n + 2$，分别对应奇数和偶数的源点。将所有的奇数和偶数分别连边到对应源点，然后从源点开始 BFS。 代码：\n注：上述反向建边仍然需要。\n例题：TAMNICA（洛谷 P6399）\n最简单的思路：模拟填充螺旋矩阵，然后将推倒的墙两侧的数连边（关键边）。最短路未必全部由关键边构成，因此还需要建普通边，然后使用 BFS 求最短路； 这代码……\n优化：不填充矩阵，用其他方法求出 B 对应的 A；并且减少建边数量，具体方法较多，见代码。 在没有墙倒塌的情况下，显然 $x$ 和 $y$ 之间的距离是 $|x - y|$，因此在普通边的情况下可以不建边，只需要将可以抄近道的关键点从小到大排序并去重，在相邻两个关键点之间连一条边。\n注意：\n下标很大，可以用 map 和链式前向星； SPFA 当心卡常； 答案很大，赋初值要在 1e16 以上； 求 A 对面的 B 决定了最大时间复杂度，可以通过找规律在 $O(\\log{n})$ 以下的时间复杂度内找到。 代码：\n通用最短路算法 最短路算法的核心操作：松弛。\n对于一条 $(x,y)$ 的边，如果有另一个点 $m$ 满足 $(x,m)$ 的 $(m,y)$ 的权值小于前者，则可以将距离更新，称为松弛操作。\nDijkstra 算法 操作步骤：\n代码：\n例题：Roadblock（洛谷 P2176）\n枚举最短路上的每一条边，依次加倍并求最短路。（其实直接枚举所有边也可以。）\n例题：次短路\n将上题中的最短路改为此段路。\n思路：维护两个数组，在松弛时分别更新最短路和次短路。\n例题：联络计划（NIKKEI PC Contest 2019-2D）\n在 $L$ 到 $R$ 之间建一条边，然后在相邻的两个点之间反向建权值为 0 的边，等效地实现建所有边的目标\nBellman-Ford 及相关 Bellman-Ford 可以检测负环。如果经过 n - 1 次松弛操作之后，仍然有可以松弛的边，证明存在负环。\n时间复杂度为 $O(nm)$，算法瓶颈在于每一轮松弛都需要扫描无用的边。通过队列可以优化，使接下来的遍历中不会反复访问。\n代码：\nSPFA 算法时间复杂度为 $O(km)$ ，其中 $k$ 通常是一个很小的常数，但是通过构造可以将 $k$ 搞得很大。\n例题：穿越虫洞 POJ3259\n判断负环，不再赘述。\n例题：爱情之路 HDU4360\n臭 名 昭 著\n分析：\n代码：\n例题：最优贸易（NOIP2009 提高组，洛谷 P1073）\n分析：\n不可以使用 Dijkstra，反例： 本题其实可以使用记忆化搜索通过，但是其他时间复杂度正确的方法包括 SPFA 和分层图。\n压轴题：最优星际贸易（COCI2012/2013 Final）\n60pts 做法：暴力枚举 $x$ 所有可能的值，对于一对 $a$ 和 $b$，假设所有权值为 $x$ 的边都走不通，此时若走不通，且 $x = 1$ 时还是走不通，输出 0 0；若后者不成立，则输出 inf。\n否则，$x$ 可能产生的贡献一定在原来的权值之下，从 $1$ 开始枚举每一个 $x$ 的值运行 Dijkstra。若此时路径长度超过了原权值，那么一定不会产生贡献，退出，否则加入集合去重。\n下课！ ",
+  "wordCount" : "202",
+  "inLanguage": "zh-cn",
+  "datePublished": "2024-11-22T00:00:00+08:00",
+  "dateModified": "2024-11-22T00:00:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "智慧的幺蛾子"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/38853453c4/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "桶装幺蛾子",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top"><link rel="stylesheet" href="/js/katex/katex.min.css">
+<script defer src="/js/katex/katex.min.js"></script>
+<script defer src="/js/katex/contrib/auto-render.js" onload="renderMathInElement(document.body);"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError : false
+            });
+        });
+</script>
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="🥫 桶装幺蛾子 (Alt + H)">🥫 桶装幺蛾子</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/about" title="❓ 关于">
+                    <span>❓ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives" title="📚 档案">
+                    <span>📚 档案</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.travellings.cn/go.html" title="🚆 开往">
+                    <span>🚆 开往</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      集训笔记：图论算法一
+    </h1>
+    <div class="post-meta"><span title='2024-11-22 00:00:00 +0800 CST'>November 22, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;智慧的幺蛾子
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%8b%93%e6%89%91%e6%8e%92%e5%ba%8f" aria-label="拓扑排序">拓扑排序</a></li>
+                <li>
+                    <a href="#%e6%9c%80%e7%9f%ad%e8%b7%af%e7%ae%97%e6%b3%95" aria-label="最短路算法">最短路算法</a><ul>
+                        
+                <li>
+                    <a href="#bfs" aria-label="BFS">BFS</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%80%9a%e7%94%a8%e6%9c%80%e7%9f%ad%e8%b7%af%e7%ae%97%e6%b3%95" aria-label="通用最短路算法">通用最短路算法</a><ul>
+                        
+                <li>
+                    <a href="#dijkstra-%e7%ae%97%e6%b3%95" aria-label="Dijkstra 算法">Dijkstra 算法</a></li></ul>
+                </li>
+                <li>
+                    <a href="#bellman-ford-%e5%8f%8a%e7%9b%b8%e5%85%b3" aria-label="Bellman-Ford 及相关">Bellman-Ford 及相关</a></li>
+                <li>
+                    <a href="#%e4%b8%8b%e8%af%be" aria-label="下课！">下课！</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="拓扑排序">拓扑排序<a hidden class="anchor" aria-hidden="true" href="#拓扑排序">#</a></h2>
+<p>拓扑排序是图论中的一种算法，适用于 DAG 中，可以用于求拓扑序列。拓扑排序的结果是一个线性序列，满足每个顶点在序列中只出现一次，且若存在 A 到 B 的路径，则 A 出现在 B 之前。拓扑序列通常不唯一。</p>
+<p>基于 BFS（入度）的拓扑排序比较容易实现。</p>
+<p>伪代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732257535-image-1024x315.png"></p>
+<p>代码示例：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732257614-image-1024x470.png"></p>
+<p>拓扑排序可以判断图中是否有环。如果最终所有顶点的入度都减少为 0，队列清空，则不存在环；否则则有环。</p>
+<p>代码示例：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732257770-image.png"></p>
+<p><strong>例题：机器人擂台赛（CF645D）</strong></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732257837-image-1024x366.png"></p>
+<p>分析：</p>
+<ul>
+<li><em>没有自相矛盾</em>：没有环；</li>
+<li><em>没有比赛包含相同机器人</em>：没有重边；</li>
+<li>属于「依赖关系」，优先考虑拓扑排序；</li>
+<li>判断是否有唯一的拓扑序列，可以在拓扑排序过程中判断是否同时有多于一个入度为 0 的顶点（也就是每次只有一个选择）。</li>
+</ul>
+<p>直接在拓扑排序的模板上进行修改即可。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732258142-image-1024x515.png"></p>
+<p>对于比赛的处理，可以有以下几种方法：</p>
+<ul>
+<li>每次加一条边，并进行拓扑排序，当序列唯一时输出（注意清空）；</li>
+<li>答案具有单调性，可以二分答案，对最大答案进行特判是否无解；</li>
+</ul>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732258511-image.png"></p>
+<ul>
+<li>拓扑排序相邻两个顶点之间的关系必须给出，因此可以在拓扑排序中记录每一场必要的比赛的编号，然后依次扫描所有比赛，在所有比赛都出现的时候就可以输出了。</li>
+</ul>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732258881-image.png"></p>
+<h2 id="最短路算法">最短路算法<a hidden class="anchor" aria-hidden="true" href="#最短路算法">#</a></h2>
+<h3 id="bfs">BFS<a hidden class="anchor" aria-hidden="true" href="#bfs">#</a></h3>
+<p>当一张图上不含边权，或者边权都相等，可以直接使用 BFS 计算最短路，算法正确且复杂度不高。</p>
+<p><strong>例题：Nearest Opposite Parity（CF1272E）</strong></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732259171-image-1024x373.png"></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732259216-image-1024x533.png"></p>
+<ul>
+<li>最简单的方法：从每一个数开始，寻找最近的异性数字；</li>
+<li>优化：从所有奇数出发，统计能到达所有偶数的最短路，对于偶数也这样求出最短路；</li>
+<li>反向建图，也就是从 <code>i + a[i]</code> 和 <code>i - a[i]</code> 连一条到 <code>i</code> 的边，也就是从<strong>终点</strong>出发，寻找到每一个起点的最短路；</li>
+</ul>
+<p>代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732260193-image.png"></p>
+<p>两个 BFS 基本一致，以到达奇数的 BFS 为例：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732260233-image.png"></p>
+<ul>
+<li>进一步进行优化，可以设置两个超级源点 $n + 1$ 和 $n + 2$，分别对应奇数和偶数的源点。将所有的奇数和偶数分别连边到对应源点，然后从源点开始 BFS。</li>
+</ul>
+<p>代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732260406-image.png"></p>
+<p>注：上述反向建边仍然需要。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732260498-image.png"></p>
+<p><strong>例题：TAMNICA（洛谷 P6399）</strong></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732260870-image.png"></p>
+<ul>
+<li>最简单的思路：模拟填充螺旋矩阵，然后将推倒的墙两侧的数连边（关键边）。最短路未必全部由关键边构成，因此还需要建普通边，然后使用 BFS 求最短路；</li>
+</ul>
+<p>这代码……</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732261172-image-1024x440.png"></p>
+<ul>
+<li>优化：不填充矩阵，用其他方法求出 B 对应的 A；并且减少建边数量，具体方法较多，见代码。</li>
+</ul>
+<p>在没有墙倒塌的情况下，显然 $x$ 和 $y$ 之间的距离是 $|x - y|$，因此在普通边的情况下可以不建边，只需要将可以抄近道的关键点从小到大排序并去重，在相邻两个关键点之间连一条边。</p>
+<p>注意：</p>
+<ul>
+<li>下标很大，可以用 <code>map</code> 和链式前向星；</li>
+<li>SPFA 当心卡常；</li>
+<li>答案很大，赋初值要在 <code>1e16</code> 以上；</li>
+<li>求 A 对面的 B 决定了最大时间复杂度，可以通过找规律在 $O(\log{n})$ 以下的时间复杂度内找到。</li>
+</ul>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732261891-image-1024x487.png"></p>
+<p>代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732262022-image.png"></p>
+<h2 id="通用最短路算法">通用最短路算法<a hidden class="anchor" aria-hidden="true" href="#通用最短路算法">#</a></h2>
+<p>最短路算法的核心操作：<strong>松弛</strong>。</p>
+<p>对于一条 $(x,y)$ 的边，如果有另一个点 $m$ 满足 $(x,m)$ 的 $(m,y)$ 的权值小于前者，则可以将距离更新，称为松弛操作。</p>
+<h3 id="dijkstra-算法">Dijkstra 算法<a hidden class="anchor" aria-hidden="true" href="#dijkstra-算法">#</a></h3>
+<p>操作步骤：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732263963-image-1024x602.png"></p>
+<p>代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732264161-image.png"></p>
+<p><strong>例题：Roadblock（洛谷 P2176）</strong></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732264310-image-1024x336.png"></p>
+<p>枚举最短路上的每一条边，依次加倍并求最短路。（其实直接枚举所有边也可以。）</p>
+<p><strong>例题：次短路</strong></p>
+<p>将上题中的最短路改为此段路。</p>
+<p>思路：维护两个数组，在松弛时分别更新最短路和次短路。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732264600-image-1024x569.png"></p>
+<p><strong>例题：联络计划（NIKKEI PC Contest 2019-2D）</strong></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732264684-image-1024x503.png"></p>
+<p>在 $L$ 到 $R$ 之间建一条边，然后在相邻的两个点之间反向建权值为 0 的边，等效地实现建所有边的目标</p>
+<h2 id="bellman-ford-及相关">Bellman-Ford 及相关<a hidden class="anchor" aria-hidden="true" href="#bellman-ford-及相关">#</a></h2>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265075-image.png"></p>
+<p>Bellman-Ford 可以检测负环。如果经过 <code>n - 1</code> 次松弛操作之后，仍然有可以松弛的边，证明存在负环。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265143-image.png"></p>
+<p>时间复杂度为 $O(nm)$，算法瓶颈在于每一轮松弛都需要扫描无用的边。通过队列可以优化，使接下来的遍历中不会反复访问。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265244-image-1024x528.png"></p>
+<p>代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265284-image-1024x491.png"></p>
+<p>SPFA 算法时间复杂度为 $O(km)$ ，其中 $k$ <em>通常</em>是一个很小的常数，但是通过构造可以将 $k$ 搞得很大。</p>
+<p><strong>例题：穿越虫洞 POJ3259</strong></p>
+<p>判断负环，不再赘述。</p>
+<p><strong>例题：爱情之路 HDU4360</strong></p>
+<p><em>臭 名 昭 著</em></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265520-image-1024x463.png"></p>
+<p>分析：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265608-image-1024x405.png"></p>
+<p>代码：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265671-image.png"></p>
+<p><strong>例题：最优贸易（NOIP2009 提高组，洛谷 P1073）</strong></p>
+<p>分析：</p>
+<ul>
+<li>不可以使用 Dijkstra，反例：</li>
+</ul>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732265977-image-1024x462.png"></p>
+<p>本题其实可以使用记忆化搜索通过，但是其他时间复杂度正确的方法包括 SPFA 和分层图。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732266104-image-1024x387.png"></p>
+<p><strong>压轴题：最优星际贸易（COCI2012/2013 Final）</strong></p>
+<p><img alt="img" loading="lazy" src="../../static/img/38853453c4.d/1732266280-image-1024x139.png"></p>
+<p><em>60pts</em> 做法：暴力枚举 $x$ 所有可能的值，对于一对 $a$ 和 $b$，假设所有权值为 $x$ 的边都走不通，此时若走不通，且 $x = 1$ 时还是走不通，输出 <code>0 0</code>；若后者不成立，则输出 <code>inf</code>。</p>
+<p>否则，$x$ 可能产生的贡献一定在原来的权值之下，从 $1$ 开始枚举每一个 $x$ 的值运行 Dijkstra。若此时路径长度超过了原权值，那么一定不会产生贡献，退出，否则加入集合去重。</p>
+<h2 id="下课">下课！<a hidden class="anchor" aria-hidden="true" href="#下课">#</a></h2>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/307ee35eff/">
+    <span class="title">« </span>
+    <br>
+    <span>集训笔记：图论算法二</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/202b1a70de/">
+    <span class="title"> »</span>
+    <br>
+    <span>CF1272E Nearest Opposite Parity 题解</span>
+  </a>
+</nav>
+<img src="/static/img/signature.png">
+
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://creativecommons.org/public-domain/cc0/">CC0</a> 授权，允许您自由使用。</span>
+    <br>
+    <span><a href="https://icp.gov.moe/?keyword=20252048" target="_blank">萌ICP备20252048号</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -59,7 +59,7 @@ sudo nmtui
 sudo systemctl restart NetworkManager
 ```
 
-很好，还是原来的 IP 地址。现在我们临时关闭 SSH 强制证书认证（撤销[使用 SSH 公钥登录服务器并禁用密码 | 桶装幺蛾子](https://hi.bug-barrel.top/posts/5baaf9322f/)中的操作），用 Wi-Fi IP 连接一下。
+很好，还是原来的 IP 地址。现在我们临时关闭 SSH 强制证书认证（撤销[使用 SSH 公钥登录服务器并禁用密码](https://hi.bug-barrel.top/posts/5baaf9322f/)中的操作），用 Wi-Fi IP 连接一下。
 
 重启 sshd：
 

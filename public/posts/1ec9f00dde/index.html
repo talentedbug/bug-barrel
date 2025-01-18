@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>DP 优化的常见方法 | 桶装幺蛾子</title>
+<meta name="keywords" content="">
+<meta name="description" content="对于朴素 DP，有几种常见的优化方法，本文主要介绍单调队列和斜率优化。
+单调队列优化 DP
+例题：P1886 滑动窗口 /【模板】单调队列
+单调队列是一种特殊的双端队列，从字面上理解，就是具有某种单调性的队列，例如递增或者递减。一般来说单调队列可以用于维护最值，解决滑动窗口类的问题，时间复杂度是 $O(n)$。
+单调队列的维护可以通过不断添加新元素，并不定时访问或者删除旧的元素。
+以上述例题为例，我们可以如何求出单调队列的长度呢？
+
+最简单的方法：枚举滑动窗口的左端点和窗口长度，再求出区间内的最大、最小值，时间复杂度 $O(n^{2}k)$；
+RMQ（区间最值）类算法：同样枚举区间，通过预处理优化求区间最值的时间复杂度，最终为 $O(n^2 \log_{2} n)$。
+
+我们可以发现，这两个算法都存在一个问题：一个序列 $a_{i},a_{i&#43;1} \cdots a_{j}$ 和同样长度的 $a_{i&#43;1},a_{i&#43;2} \cdots a_{j&#43;1}$，其中有长达 $j-i-1$ 的区间是重复的。
+这里，单调队列优化就有用了。我们用一个例子来说明单调队列如何工作：
+1 4 5 -1 0 3 1
+假设当前的区间长度 $k=4$，我们只求最小值，那么：
+
+队列初始为空，1 入队；
+由于 1 入队时间早于 4，有可能在 1 出队后，4 成为新的最小值，因此 4 进队；
+同上原因，5 入队；
+这时候我们遇到了 -1，它小于队尾的 5，并且 -1 的入队时间晚于 5。那么如果 -1 入队，5 出队早于 -1，并且只要 -1 在队中，最小值都不可能是 5，因此 5 出队；
+同上原因，4 出队；
+由于上面主要原因已经讲完了，所以下面就简单地带过：0 时间晚，入队；
+3 时间晚，入队；
+1 时间晚，且值小，3 出队，1 入队。
+
+通过上述过程，我们可以发现，无论到哪一位，我们都维护了一个单调递减的队列。由于本题还要求区间长度，我们还应当记录队列中元素的位置，如果超出范围就同样出队。">
+<meta name="author" content="智慧的幺蛾子">
+<link rel="canonical" href="http://localhost:1313/posts/1ec9f00dde/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.75cc0bc8b7e49d1131c6aa01c8e0ffc243167dd94130253a953494bccdeba2cb.css" integrity="sha256-dcwLyLfknRExxqoByOD/wkMWfdlBMCU6lTSUvM3ross=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.jpg">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.jpg">
+<link rel="mask-icon" href="http://localhost:1313/favicon.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh-cn" href="http://localhost:1313/posts/1ec9f00dde/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="http://localhost:1313/posts/1ec9f00dde/">
+  <meta property="og:site_name" content="桶装幺蛾子">
+  <meta property="og:title" content="DP 优化的常见方法">
+  <meta property="og:description" content="对于朴素 DP，有几种常见的优化方法，本文主要介绍单调队列和斜率优化。
+单调队列优化 DP 例题：P1886 滑动窗口 /【模板】单调队列
+单调队列是一种特殊的双端队列，从字面上理解，就是具有某种单调性的队列，例如递增或者递减。一般来说单调队列可以用于维护最值，解决滑动窗口类的问题，时间复杂度是 $O(n)$。
+单调队列的维护可以通过不断添加新元素，并不定时访问或者删除旧的元素。
+以上述例题为例，我们可以如何求出单调队列的长度呢？
+最简单的方法：枚举滑动窗口的左端点和窗口长度，再求出区间内的最大、最小值，时间复杂度 $O(n^{2}k)$； RMQ（区间最值）类算法：同样枚举区间，通过预处理优化求区间最值的时间复杂度，最终为 $O(n^2 \log_{2} n)$。 我们可以发现，这两个算法都存在一个问题：一个序列 $a_{i},a_{i&#43;1} \cdots a_{j}$ 和同样长度的 $a_{i&#43;1},a_{i&#43;2} \cdots a_{j&#43;1}$，其中有长达 $j-i-1$ 的区间是重复的。
+这里，单调队列优化就有用了。我们用一个例子来说明单调队列如何工作：
+1 4 5 -1 0 3 1 假设当前的区间长度 $k=4$，我们只求最小值，那么：
+队列初始为空，1 入队； 由于 1 入队时间早于 4，有可能在 1 出队后，4 成为新的最小值，因此 4 进队； 同上原因，5 入队； 这时候我们遇到了 -1，它小于队尾的 5，并且 -1 的入队时间晚于 5。那么如果 -1 入队，5 出队早于 -1，并且只要 -1 在队中，最小值都不可能是 5，因此 5 出队； 同上原因，4 出队； 由于上面主要原因已经讲完了，所以下面就简单地带过：0 时间晚，入队； 3 时间晚，入队； 1 时间晚，且值小，3 出队，1 入队。 通过上述过程，我们可以发现，无论到哪一位，我们都维护了一个单调递减的队列。由于本题还要求区间长度，我们还应当记录队列中元素的位置，如果超出范围就同样出队。">
+  <meta property="og:locale" content="zh-cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-27T00:00:00+08:00">
+    <meta property="article:modified_time" content="2024-11-27T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DP 优化的常见方法">
+<meta name="twitter:description" content="对于朴素 DP，有几种常见的优化方法，本文主要介绍单调队列和斜率优化。
+单调队列优化 DP
+例题：P1886 滑动窗口 /【模板】单调队列
+单调队列是一种特殊的双端队列，从字面上理解，就是具有某种单调性的队列，例如递增或者递减。一般来说单调队列可以用于维护最值，解决滑动窗口类的问题，时间复杂度是 $O(n)$。
+单调队列的维护可以通过不断添加新元素，并不定时访问或者删除旧的元素。
+以上述例题为例，我们可以如何求出单调队列的长度呢？
+
+最简单的方法：枚举滑动窗口的左端点和窗口长度，再求出区间内的最大、最小值，时间复杂度 $O(n^{2}k)$；
+RMQ（区间最值）类算法：同样枚举区间，通过预处理优化求区间最值的时间复杂度，最终为 $O(n^2 \log_{2} n)$。
+
+我们可以发现，这两个算法都存在一个问题：一个序列 $a_{i},a_{i&#43;1} \cdots a_{j}$ 和同样长度的 $a_{i&#43;1},a_{i&#43;2} \cdots a_{j&#43;1}$，其中有长达 $j-i-1$ 的区间是重复的。
+这里，单调队列优化就有用了。我们用一个例子来说明单调队列如何工作：
+1 4 5 -1 0 3 1
+假设当前的区间长度 $k=4$，我们只求最小值，那么：
+
+队列初始为空，1 入队；
+由于 1 入队时间早于 4，有可能在 1 出队后，4 成为新的最小值，因此 4 进队；
+同上原因，5 入队；
+这时候我们遇到了 -1，它小于队尾的 5，并且 -1 的入队时间晚于 5。那么如果 -1 入队，5 出队早于 -1，并且只要 -1 在队中，最小值都不可能是 5，因此 5 出队；
+同上原因，4 出队；
+由于上面主要原因已经讲完了，所以下面就简单地带过：0 时间晚，入队；
+3 时间晚，入队；
+1 时间晚，且值小，3 出队，1 入队。
+
+通过上述过程，我们可以发现，无论到哪一位，我们都维护了一个单调递减的队列。由于本题还要求区间长度，我们还应当记录队列中元素的位置，如果超出范围就同样出队。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "DP 优化的常见方法",
+      "item": "http://localhost:1313/posts/1ec9f00dde/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DP 优化的常见方法",
+  "name": "DP 优化的常见方法",
+  "description": "对于朴素 DP，有几种常见的优化方法，本文主要介绍单调队列和斜率优化。\n单调队列优化 DP 例题：P1886 滑动窗口 /【模板】单调队列\n单调队列是一种特殊的双端队列，从字面上理解，就是具有某种单调性的队列，例如递增或者递减。一般来说单调队列可以用于维护最值，解决滑动窗口类的问题，时间复杂度是 $O(n)$。\n单调队列的维护可以通过不断添加新元素，并不定时访问或者删除旧的元素。\n以上述例题为例，我们可以如何求出单调队列的长度呢？\n最简单的方法：枚举滑动窗口的左端点和窗口长度，再求出区间内的最大、最小值，时间复杂度 $O(n^{2}k)$； RMQ（区间最值）类算法：同样枚举区间，通过预处理优化求区间最值的时间复杂度，最终为 $O(n^2 \\log_{2} n)$。 我们可以发现，这两个算法都存在一个问题：一个序列 $a_{i},a_{i+1} \\cdots a_{j}$ 和同样长度的 $a_{i+1},a_{i+2} \\cdots a_{j+1}$，其中有长达 $j-i-1$ 的区间是重复的。\n这里，单调队列优化就有用了。我们用一个例子来说明单调队列如何工作：\n1 4 5 -1 0 3 1 假设当前的区间长度 $k=4$，我们只求最小值，那么：\n队列初始为空，1 入队； 由于 1 入队时间早于 4，有可能在 1 出队后，4 成为新的最小值，因此 4 进队； 同上原因，5 入队； 这时候我们遇到了 -1，它小于队尾的 5，并且 -1 的入队时间晚于 5。那么如果 -1 入队，5 出队早于 -1，并且只要 -1 在队中，最小值都不可能是 5，因此 5 出队； 同上原因，4 出队； 由于上面主要原因已经讲完了，所以下面就简单地带过：0 时间晚，入队； 3 时间晚，入队； 1 时间晚，且值小，3 出队，1 入队。 通过上述过程，我们可以发现，无论到哪一位，我们都维护了一个单调递减的队列。由于本题还要求区间长度，我们还应当记录队列中元素的位置，如果超出范围就同样出队。\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "对于朴素 DP，有几种常见的优化方法，本文主要介绍单调队列和斜率优化。\n单调队列优化 DP 例题：P1886 滑动窗口 /【模板】单调队列\n单调队列是一种特殊的双端队列，从字面上理解，就是具有某种单调性的队列，例如递增或者递减。一般来说单调队列可以用于维护最值，解决滑动窗口类的问题，时间复杂度是 $O(n)$。\n单调队列的维护可以通过不断添加新元素，并不定时访问或者删除旧的元素。\n以上述例题为例，我们可以如何求出单调队列的长度呢？\n最简单的方法：枚举滑动窗口的左端点和窗口长度，再求出区间内的最大、最小值，时间复杂度 $O(n^{2}k)$； RMQ（区间最值）类算法：同样枚举区间，通过预处理优化求区间最值的时间复杂度，最终为 $O(n^2 \\log_{2} n)$。 我们可以发现，这两个算法都存在一个问题：一个序列 $a_{i},a_{i+1} \\cdots a_{j}$ 和同样长度的 $a_{i+1},a_{i+2} \\cdots a_{j+1}$，其中有长达 $j-i-1$ 的区间是重复的。\n这里，单调队列优化就有用了。我们用一个例子来说明单调队列如何工作：\n1 4 5 -1 0 3 1 假设当前的区间长度 $k=4$，我们只求最小值，那么：\n队列初始为空，1 入队； 由于 1 入队时间早于 4，有可能在 1 出队后，4 成为新的最小值，因此 4 进队； 同上原因，5 入队； 这时候我们遇到了 -1，它小于队尾的 5，并且 -1 的入队时间晚于 5。那么如果 -1 入队，5 出队早于 -1，并且只要 -1 在队中，最小值都不可能是 5，因此 5 出队； 同上原因，4 出队； 由于上面主要原因已经讲完了，所以下面就简单地带过：0 时间晚，入队； 3 时间晚，入队； 1 时间晚，且值小，3 出队，1 入队。 通过上述过程，我们可以发现，无论到哪一位，我们都维护了一个单调递减的队列。由于本题还要求区间长度，我们还应当记录队列中元素的位置，如果超出范围就同样出队。\n那么问题来了，时间复杂度是什么？看起来，我们枚举左端点，还要将一些不符合条件的元素出队，好像来到了二次方，但是考虑枚举左端点时，所有节点只会进队一次、出队一次，所以本题总时间复杂度可以优化到 $O(n)$。\n代码实现：\n#include using namespace std; int n, k; int a[1200000]; int main() { cin \u003e\u003e n \u003e\u003e k; for (int i = 1; i \u003c= n; i++) { cin \u003e\u003e a[i]; } deque",
+  "wordCount" : "368",
+  "inLanguage": "zh-cn",
+  "datePublished": "2024-11-27T00:00:00+08:00",
+  "dateModified": "2024-11-27T00:00:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "智慧的幺蛾子"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/1ec9f00dde/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "桶装幺蛾子",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top"><link rel="stylesheet" href="/js/katex/katex.min.css">
+<script defer src="/js/katex/katex.min.js"></script>
+<script defer src="/js/katex/contrib/auto-render.js" onload="renderMathInElement(document.body);"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError : false
+            });
+        });
+</script>
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="🥫 桶装幺蛾子 (Alt + H)">🥫 桶装幺蛾子</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/about" title="❓ 关于">
+                    <span>❓ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives" title="📚 档案">
+                    <span>📚 档案</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.travellings.cn/go.html" title="🚆 开往">
+                    <span>🚆 开往</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      DP 优化的常见方法
+    </h1>
+    <div class="post-meta"><span title='2024-11-27 00:00:00 +0800 CST'>November 27, 2024</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;智慧的幺蛾子
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%8d%95%e8%b0%83%e9%98%9f%e5%88%97%e4%bc%98%e5%8c%96-dp" aria-label="单调队列优化 DP">单调队列优化 DP</a></li>
+                <li>
+                    <a href="#%e6%96%9c%e7%8e%87%e4%bc%98%e5%8c%96-dp" aria-label="斜率优化 DP">斜率优化 DP</a></li>
+                <li>
+                    <a href="#%e4%b8%8b%e8%af%be" aria-label="下课！">下课！</a></li>
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83%e5%92%8c%e5%bc%95%e7%94%a8" aria-label="参考和引用">参考和引用</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>对于朴素 DP，有几种常见的优化方法，本文主要介绍<strong>单调队列</strong>和<strong>斜率</strong>优化。</p>
+<h2 id="单调队列优化-dp">单调队列优化 DP<a hidden class="anchor" aria-hidden="true" href="#单调队列优化-dp">#</a></h2>
+<p>例题：<a href="https://www.luogu.com.cn/problem/P1886">P1886 滑动窗口 /【模板】单调队列</a></p>
+<p>单调队列是一种特殊的双端队列，从字面上理解，就是具有某种单调性的队列，例如递增或者递减。一般来说单调队列可以用于维护最值，解决滑动窗口类的问题，时间复杂度是 $O(n)$。</p>
+<p>单调队列的维护可以通过不断添加新元素，并不定时访问或者删除旧的元素。</p>
+<p>以上述例题为例，我们可以如何求出单调队列的长度呢？</p>
+<ul>
+<li>最简单的方法：枚举滑动窗口的左端点和窗口长度，再求出区间内的最大、最小值，时间复杂度 $O(n^{2}k)$；</li>
+<li>RMQ（区间最值）类算法：同样枚举区间，通过预处理优化求区间最值的时间复杂度，最终为 $O(n^2 \log_{2} n)$。</li>
+</ul>
+<p>我们可以发现，这两个算法都存在一个问题：一个序列 $a_{i},a_{i+1} \cdots a_{j}$ 和同样长度的 $a_{i+1},a_{i+2} \cdots a_{j+1}$，其中有长达 $j-i-1$ 的区间是重复的。</p>
+<p>这里，单调队列优化就有用了。我们用一个例子来说明单调队列如何工作：</p>
+<pre tabindex="0"><code>1 4 5 -1 0 3 1
+</code></pre><p>假设当前的区间长度 $k=4$，我们只求最小值，那么：</p>
+<ul>
+<li>队列初始为空，1 入队；</li>
+<li>由于 1 入队时间早于 4，有可能在 1 出队后，4 成为新的最小值，因此 4 进队；</li>
+<li>同上原因，5 入队；</li>
+<li>这时候我们遇到了 -1，它小于队尾的 5，并且 -1 的入队时间晚于 5。那么如果 -1 入队，5 出队早于 -1，并且只要 -1 在队中，最小值都不可能是 5，因此 5 出队；</li>
+<li>同上原因，4 出队；</li>
+<li>由于上面主要原因已经讲完了，所以下面就简单地带过：0 时间晚，入队；</li>
+<li>3 时间晚，入队；</li>
+<li>1 时间晚，且值小，3 出队，1 入队。</li>
+</ul>
+<p>通过上述过程，我们可以发现，无论到哪一位，我们都维护了一个<strong>单调</strong>递减的队列。由于本题还要求区间长度，我们还应当记录队列中元素的位置，如果超出范围就同样出队。</p>
+<p>那么问题来了，时间复杂度是什么？看起来，我们枚举左端点，还要将一些不符合条件的元素出队，好像来到了二次方，但是考虑枚举左端点时，所有节点只会进队一次、出队一次，所以本题总时间复杂度可以优化到 $O(n)$。</p>
+<p>代码实现：</p>
+<pre tabindex="0"><code>#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+int n, k;
+int a[1200000];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; k;
+    for (int i = 1; i &lt;= n; i++) {
+        cin &gt;&gt; a[i];
+    }
+    deque&lt;pair&lt;int, int&gt;&gt; q;
+    for (int i = 1; i &lt;= n; i++) {
+        while (!q.empty()) {
+            if (q.back().second &gt; a[i]) {
+                q.pop_back();
+            } else {
+                break;
+            }
+        }
+        while (!q.empty()) {
+            if (q.front().first &lt;= i - k) {
+                q.pop_front();
+            } else {
+                break;
+            }
+        }
+        q.push_back({i, a[i]});
+        if (i &gt;= k) {
+            cout &lt;&lt; q.front().second &lt;&lt; &#34; &#34;;
+        }
+    }
+    cout &lt;&lt; endl;
+    q.clear();
+    for (int i = 1; i &lt;= n; i++) {
+        while (!q.empty()) {
+            if (q.back().second &lt; a[i]) {
+                q.pop_back();
+            } else {
+                break;
+            }
+        }
+        while (!q.empty()) {
+            if (q.front().first &lt;= i - k) {
+                q.pop_front();
+            } else {
+                break;
+            }
+        }
+        q.push_back({i, a[i]});
+        if (i &gt;= k) {
+            cout &lt;&lt; q.front().second &lt;&lt; &#34; &#34;;
+        }
+    }
+    return 0;
+}
+</code></pre><p>本题的题解大多采用的是数组模拟队列，但是本蛾子认为虽然 STL 的常数是模拟的 1.5 倍，但我们必须知道这是因为其功能的丰富。一个冷知识，deque 可以随机访问；另一个冷知识，几乎所有 STL 容器都可以顺序访问；再一个冷知识，map、set 等加入元素会自动排序。在数据范围明确的情况下，我们还是要遵循 C++ 封装的思想。</p>
+<p>那么，这与 DP 有啥关系？很显然，例如在 LIS 中，我们需要在前面所有的 DP 状态中寻找满足某个条件的最大值，那么我们可以用一个单调队列维护最长 LIS，代码实现在之前的集训笔记中已经记录了，大家自取：<a href="https://old.bug-barrel.top/archives/55">集训笔记：动态规划经典模型 1</a>。</p>
+<p>至于其他应用，本蛾子实在来不及写了，大家可以参考这篇洛谷博客，讲得也很好：<a href="https://www.luogu.com.cn/article/1u1affxp">单调队列优化dp</a>，也可以自行在 OI Wiki 上搜索相关伪代码来理解。</p>
+<h2 id="斜率优化-dp">斜率优化 DP<a hidden class="anchor" aria-hidden="true" href="#斜率优化-dp">#</a></h2>
+<p>相比于很直接、简洁的单调队列优化，斜率优化就复杂了许多。</p>
+<p>前面我们看到的单调队列优化，主要适用于状态转移方程类似 $f_{i}=\min_{0 \leq j \leq i-1} f_{j}+a_{i}+b_{j}$ 的 DP，因为这里求最小值的操作是线性的。</p>
+<p>但是，当我们遇到形如 $f_{i}=\min_{0 \leq j \leq i-1} f_{j}+a_{i} \times b_{j}$ 的方程，我们就需要进行斜率优化来获得更高效的算法。</p>
+<p>例题：<a href="https://vjudge.net/problem/HDU-3507">HDU3507 Print Article</a></p>
+<p>我们可以发现，如果文章分段数增加，会导致每段的长度减少，二者互相牵制，因此无法贪心。</p>
+<p>设 $f_{i}$ 表示打印前 $i$ 个单词的最小成本，$s_{i}$ 则是 $c_{1} \cdots lc_{i}$ 的前缀和。自然地可以得到状态转移方程：</p>
+<p>$f_{i}=\min_{0 \leq j \leq i-1} f_{i}+(s_{i}-s_{j})^2+M$</p>
+<p>选定一个 $j$，并将 $i$ 看作常量，移项并整理可以推出：</p>
+<p>$f_{j}+s_{j}^2=2s_{i} s_{j}+f_{i}-s_{i}^2-M$</p>
+<p>这个式子看起来很复杂，但是我们牢记所有含 $i$ 都是常量，对比一次函数的式子 $y=kx+b$，我们将 $f_{i}+s_{j}^2$ 看作 $y$，将 $s_{j}$ 看作 $x$，将 $2s_{i}$ 看作 $k$，将剩余的部分全部看作常量 $b$。</p>
+<p>当我们取不同的 $j$ 时，可以发现对应了平面直角座标系中的不同的点 $(x,y)$。</p>
+<p><img alt="img" loading="lazy" src="../../static/img/1ec9f00dde.d/image-27.png"></p>
+<blockquote>
+<p>注：此处图片引用原视频，在文末的参考中列出。</p>
+<p>原视频和本文在这里都将左式写为两项之和，但是其实可以将常数 $f_{j}$ 移项到右边。另外，其实红点和黑点是二次函数的图像而不是一次函数，是我们将它简化了。</p>
+</blockquote>
+<p>回过头看原来的方程，实际上我们是要求一个 $j$ 使得函数值 $f_{i}$ 最小。那么当 $i$ 一定，斜率也就确定了，截距 $b$ 最小时，$f_{i}$ 也可以取到最小值。也就是说，当斜率 $k$ 对应的直线与函数图像相切时，截距可以取到最小值。</p>
+<p>观察可以发现，相切的点左侧斜率都小于绿色直线，右侧都大于，我们可以通过二分查找位于二者分界处的点。</p>
+<p>当 $i$ 发生变化，例如增加时，斜率增大，依然要寻找这样的点，我们可以通过单调队列维护。</p>
+<ul>
+<li>若新点与队尾点的斜率小于等于队尾与相邻点的斜率，就会出现与凸包相反的方向，此时我们应该将队尾出队，维护下凸包状态；</li>
+<li>重复执行上述操作，直到凸包状态可以维持；</li>
+<li>新点入队；</li>
+<li>将队头所有斜率小于当前直线的节点全部出队；</li>
+<li>此时，队头点应当恰好相切，就是最优决策。</li>
+</ul>
+<p>代码实现：</p>
+<p><img alt="img" loading="lazy" src="../../static/img/1ec9f00dde.d/image-28.png"></p>
+<blockquote>
+<p>代码借用了参考的视频，感谢！</p>
+</blockquote>
+<h2 id="下课">下课！<a hidden class="anchor" aria-hidden="true" href="#下课">#</a></h2>
+<p>本蛾子还是太着急了，所以来不及多写一些。</p>
+<p>后天就要上 NOIP 考场了今天写这个是不是废了……</p>
+<blockquote>
+<p>从 12 月穿越回来的幺蛾子：「是的。」</p>
+</blockquote>
+<h2 id="参考和引用">参考和引用<a hidden class="anchor" aria-hidden="true" href="#参考和引用">#</a></h2>
+<ul>
+<li><a href="https://www.luogu.com.cn/article/1u1affxp">单调队列优化dp</a> - <a href="https://www.luogu.com.cn/user/130812">XyzL</a>；</li>
+<li><a href="https://www.bilibili.com/video/BV1CM4y147Ef">E51【模板】斜率优化DP 打印文章</a> - <a href="https://space.bilibili.com/517494241">董晓算法</a>。</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/5baaf9322f/">
+    <span class="title">« </span>
+    <br>
+    <span>使用 SSH 公钥登录服务器并禁用密码</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/b1aaece446/">
+    <span class="title"> »</span>
+    <br>
+    <span>图的连通性问题</span>
+  </a>
+</nav>
+<img src="/static/img/signature.png">
+
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://creativecommons.org/public-domain/cc0/">CC0</a> 授权，允许您自由使用。</span>
+    <br>
+    <span><a href="https://icp.gov.moe/?keyword=20252048" target="_blank">萌ICP备20252048号</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
