@@ -1,5 +1,11 @@
 {{- define "main" }}
 
+{{- if .Params.coverImage }}
+<div class="featured-image">
+    <img src="{{ .Params.coverImage }}?t={{ now.UnixNano }}" alt="{{ .Title }}">
+</div>
+{{- end }}
+
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}

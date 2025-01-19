@@ -2,6 +2,7 @@
 date: '2024-12-08T15:54:36+08:00'
 draft: false
 title: '关于智慧的幺蛾子和桶装幺蛾子'
+coverImage: 'https://www.loliapi.com/acg/pc/'
 ---
 
 👋 你好！

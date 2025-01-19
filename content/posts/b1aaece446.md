@@ -3,6 +3,7 @@ date: '2024-11-25T00:00:00+08:00'
 draft: false
 title: '图的连通性问题'
 typora-copy-images-to: '../../static/img/${filename}.d'
+coverImage: 'https://www.loliapi.com/acg/pc/'
 ---
 
 **图的连通性问题**主要包括：
@@ -462,8 +463,4 @@ signed main()
 	}
 	return 0;
 }
-```
-
-## 下课！
-
-本蛾子一边学习，一边写完了这篇博客，因此难免会有些缺漏。如果您发现本蛾子写错了——很有可能的，那么请在评论中尽管指正，谢谢！
+``

@@ -3,6 +3,7 @@ date: '2025-01-10T22:10:47+08:00'
 draft: false
 title: '使用单板机为旧打印机添加局域网共享'
 typora-copy-images-to: '../../static/img/${filename}.d'
+coverImage: 'https://www.loliapi.com/acg/pc/'
 ---
 
 本蛾子家里有一部[香橙派 Zero 3](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-3.html) 一直在吃灰。
