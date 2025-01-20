@@ -2,7 +2,7 @@ baseURL: "https://hi.bug-barrel.top"
 title: 桶装幺蛾子
 languageCode: zh-cn
 defaultContentLanguage: zh-cn
-copyright: "[CC0](https://creativecommons.org/public-domain/cc0/) 授权，允许您自由使用。"
+copyright: "🆓 [CC0](https://creativecommons.org/public-domain/cc0/) 授权，允许您自由使用。"
 theme: ["PaperMod"]
 
 enableInlineShortcodes: true
@@ -26,8 +26,6 @@ languages:
           url: archives
         - name: ❓ 关于
           url: about
-        - name: 🚆 开往
-          url: https://www.travellings.cn/go.html
 
 outputs:
   home:

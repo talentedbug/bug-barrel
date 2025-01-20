@@ -3,7 +3,7 @@ date: '2024-11-25T00:00:00+08:00'
 draft: false
 title: '图的连通性问题'
 typora-copy-images-to: '../../static/img/${filename}.d'
-coverImage: 'https://www.loliapi.com/acg/pc/'
+coverImage: '../../static/img/b1aaece446.d/cover.png'
 ---
 
 **图的连通性问题**主要包括：

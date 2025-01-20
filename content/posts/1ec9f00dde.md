@@ -3,7 +3,7 @@ date: '2024-11-27T00:00:00+08:00'
 draft: false
 title: 'DP 优化的常见方法'
 typora-copy-images-to: '../../static/img/${filename}.d'
-coverImage: 'https://www.loliapi.com/acg/pc/'
+coverImage: '../../static/img/1ec9f00dde.d/cover.jpg'
 ---
 
 对于朴素 DP，有几种常见的优化方法，本文主要介绍**单调队列**和**斜率**优化。
