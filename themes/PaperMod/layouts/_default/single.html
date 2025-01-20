@@ -1,8 +1,8 @@
 {{- define "main" }}
 
 {{- if .Params.coverImage }}
-<div class="featured-image">
-    <img src="{{ .Params.coverImage }}?t={{ now.UnixNano }}" alt="{{ .Title }}">
+<div class="featured-image" style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden;">
+    <img src="{{ .Params.coverImage }}?t={{ now.UnixNano }}" alt="{{ .Title }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top;">
 </div>
 {{- end }}
 

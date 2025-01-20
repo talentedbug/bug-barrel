@@ -3,7 +3,7 @@ date: '2024-12-29T09:39:37+08:00'
 draft: false
 title: 'Clash 配置文件简述'
 typora-copy-images-to: '../../static/img/${filename}.d'
-coverImage: '../../static/img/eeace13dad.d/cover.png'
+coverImage: '../../static/img/eeace13dad.d/cover.jpg'
 ---
 
 最近本蛾子发现之前搭建的代理，访问部分国内网站的时候不光速度很慢，而且有时候会报 PR_END_OF_FILE_ERROR（无法确定内容完整性，就是远程，特别是 CSDN，全站都无法访问。
