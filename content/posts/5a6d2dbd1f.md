@@ -3,6 +3,7 @@ date: '2025-01-20T19:13:29+08:00'
 draft: false
 title: '金光闪闪的新代理协议：XHTTP'
 typora-copy-images-to: '../../static/img/${filename}.d'
+coverImage: '../../static/img/5a6d2dbd1f.d/cover.jpg'
 ---
 
 三个月之前，本蛾子发布了一则非常详细的 VLESS、WebSocket、TLS 加上 CDN 的代理搭建指南（[搭建自己的代理服务器](https://hi.bug-barrel.top/posts/4f6adc86c6/)），给出了本蛾子当时认为最安全的方案。
