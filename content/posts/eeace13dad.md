@@ -400,3 +400,13 @@ rules:
 > [防火长城域名服务器缓存污染 IP 列表](https://zh.wikiversity.org/wiki/%E9%98%B2%E7%81%AB%E9%95%BF%E5%9F%8E%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%93%E5%AD%98%E6%B1%A1%E6%9F%93IP%E5%88%97%E8%A1%A8)（[维基学院](https://zh.wikiversity.org)）
 >
 > [Misaka-blog/clash-meta: 这是一个基于 Clash Meta 订阅的配置文件模板](https://gitlab.com/Misaka-blog/clash-meta)（原作者：[Misaka-blog](https://gitlab.com/Misaka-blog)，博客已删）
+
+> 2025 年 1 月 26 日更新：在 Linux 发行版中，可能出现开启了 TUN 模式却无法接管流量的情况：可以通过手动设置代理来科学上网，但是不能直接使用。这是因为 TUN 模式要求 Root 权限来绑定小于 1024 的端口，但是运行一般是使用普通用户，Mihomo 内核无法绑定。可以通过以下方式解决：
+>
+> ```bash
+> sudo setcap cap_net_admin=+ep /usr/share/FlClash/FlClashCore
+> ```
+>
+> 也就是给内核赋予网络权限。
+>
+> Xray 内核的 v2rayN 采取了更加简单粗暴的方法：存储 `sudo` 密码；v2ray 内核的 v2rayA 则使用 Root 权限作为 systemd 服务运行。二者都绕过了这个权限问题。
