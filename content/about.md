@@ -73,6 +73,7 @@ OI：
 
 - 🔒 SSH 公钥：`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtPga4T15OdsQJ+wFxp0yacuhxYA9qQTGNqz/HE9hp+ Talented Bug <talentedbug@bug-barrel.top>`
 - 🔑 PGP 公钥：`5848 5086 D9A0 2634 1F4B 663E 4F51 3147 DE97 FFBC`（`Talented Bug <talentedbug@bug-barrel.top>`）
+- 🗑 CSDN：[Talented Bug](https://blog.csdn.net/talentedbug) 🇨🇳 ⭐⭐⭐⭐（~~能过审的~~精选文章）
 - 📧 邮件：[talentedbug@tutamail.com](mailto:talentedbug@tutamail.com) 🇨🇳 🇬🇧 ⭐⭐⭐⭐⭐
 - 🐙 GitHub：[Talented Bug (talentedbug)](https://github.com/talentedbug) 🇨🇳 🇬🇧 ⭐⭐⭐⭐
 - 🌈 Bluesky：[Talented Bug (talentedbug.bsky.social)](https://bsky.app/profile/talentedbug.bsky.social) 🇬🇧 ⭐⭐
